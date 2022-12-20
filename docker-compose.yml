@@ -8,11 +8,16 @@ services:
     command: go run main.go 
   web1:
     image: strm/helloworld-http
+    container_name: target-web1
   web2:
     image: strm/helloworld-http
+    container_name: target-web2
   web3:
     image: strm/helloworld-http
+    container_name: target-web3
   web4:
     image: strm/helloworld-http
+    container_name: target-web4
   web5:
     image: strm/helloworld-http
+    container_name: target-web5
