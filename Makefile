@@ -8,7 +8,7 @@ stop:
 	docker-compose stop
 
 spam:
-	go run cmd/spamer/main.go
+	go run cmd/spamer/spamer.go
 
 stop-spam:
 	./kill.sh
