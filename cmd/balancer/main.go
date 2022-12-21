@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"os"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -16,7 +17,8 @@ import (
 )
 
 const (
-	Attempts int = iota
+	LOG_FILE_PATH string = "logs/balancer_log.log"
+	Attempts      int    = iota
 	Retry
 )
 
@@ -71,12 +73,11 @@ func (s *ServerPool) MarkBackendStatus(backendUrl *url.URL, alive bool) {
 
 // GetNextPeer returns next active peer to take a connection
 func (s *ServerPool) GetNextPeer() *Backend {
-	// loop entire backends to find out an Alive backend
 	next := s.NextIndex()
-	l := len(s.backends) + next // start from next and move a full cycle
+	l := len(s.backends) + next
 	for i := next; i < l; i++ {
-		idx := i % len(s.backends)     // take an index by modding
-		if s.backends[idx].IsAlive() { // if we have an alive backend, use it and store if its not the original one
+		idx := i % len(s.backends)
+		if s.backends[idx].IsAlive() {
 			if i != next {
 				atomic.StoreUint64(&s.current, uint64(idx))
 			}
@@ -87,15 +88,15 @@ func (s *ServerPool) GetNextPeer() *Backend {
 }
 
 // HealthCheck pings the backends and update the status
-func (s *ServerPool) HealthCheck() {
+func (s *ServerPool) HealthCheck(logger *log.Logger) {
 	for _, b := range s.backends {
 		status := "up"
-		alive := isBackendAlive(b.URL)
+		alive := isBackendAlive(b.URL, logger)
 		b.SetAlive(alive)
 		if !alive {
 			status = "down"
 		}
-		log.Printf("%s [%s]\n", b.URL, status)
+		logger.Printf("%s [%s]\n", b.URL, status)
 	}
 }
 
@@ -133,11 +134,11 @@ func lb(w http.ResponseWriter, r *http.Request) {
 }
 
 // isAlive checks whether a backend is Alive by establishing a TCP connection
-func isBackendAlive(u *url.URL) bool {
+func isBackendAlive(u *url.URL, logger *log.Logger) bool {
 	timeout := 2 * time.Second
 	conn, err := net.DialTimeout("tcp", u.Host, timeout)
 	if err != nil {
-		log.Println("Site unreachable, error: ", err)
+		logger.Println("Site unreachable, error: ", err)
 		return false
 	}
 	defer conn.Close()
@@ -145,14 +146,14 @@ func isBackendAlive(u *url.URL) bool {
 }
 
 // healthCheck runs a routine for check status of the backends every 2 mins
-func healthCheck() {
-	t := time.NewTicker(time.Minute * 2)
+func healthCheck(logger *log.Logger) {
+	t := time.NewTicker(time.Second * 30)
 	for {
 		select {
 		case <-t.C:
-			log.Println("Starting health check...")
-			serverPool.HealthCheck()
-			log.Println("Health check completed")
+			logger.Println("Starting health check...")
+			serverPool.HealthCheck(logger)
+			logger.Println("Health check completed")
 		}
 	}
 }
@@ -167,28 +168,36 @@ var serverPool ServerPool
 
 func main() {
 
+	file, err := os.OpenFile(LOG_FILE_PATH, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatalf("error reading log file: %s\n", err.Error())
+	}
+	defer file.Close()
+
+	logger := log.New(file, "balancer log ", log.LstdFlags)
+
 	if err := initConfig(); err != nil {
-		log.Fatalf("error occured while parsing config file: %s\n", err.Error())
+		logger.Fatalf("error occured while parsing config file: %s\n", err.Error())
 	}
 
 	serverList := viper.GetString("webs")
 	port := viper.GetString("port")
 
 	// parse servers
-	tokens := strings.Split(serverList, ",")
-	for _, tok := range tokens {
-		serverUrl, err := url.Parse(tok)
+	servers := strings.Split(serverList, ",")
+	for _, server := range servers {
+		serverUrl, err := url.Parse(server)
 		if err != nil {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 
 		proxy := httputil.NewSingleHostReverseProxy(serverUrl)
 		proxy.ErrorHandler = func(writer http.ResponseWriter, request *http.Request, e error) {
-			log.Printf("[%s] %s\n", serverUrl.Host, e.Error())
+			logger.Printf("[%s] %s\n", serverUrl.Host, e.Error())
 			retries := GetRetryFromContext(request)
 			if retries < 3 {
 				select {
-				case <-time.After(10 * time.Millisecond):
+				case <-time.After(100 * time.Second):
 					ctx := context.WithValue(request.Context(), Retry, retries+1)
 					proxy.ServeHTTP(writer, request.WithContext(ctx))
 				}
@@ -200,7 +209,7 @@ func main() {
 
 			// if the same request routing for few attempts with different backends, increase the count
 			attempts := GetAttemptsFromContext(request)
-			log.Printf("%s(%s) Attempting retry %d\n", request.RemoteAddr, request.URL.Path, attempts)
+			logger.Printf("%s(%s) Attempting retry %d\n", request.RemoteAddr, request.URL.Path, attempts)
 			ctx := context.WithValue(request.Context(), Attempts, attempts+1)
 			lb(writer, request.WithContext(ctx))
 		}
@@ -210,7 +219,7 @@ func main() {
 			Alive:        true,
 			ReverseProxy: proxy,
 		})
-		log.Printf("Configured server: %s\n", serverUrl)
+		logger.Printf("Configured server: %s\n", serverUrl)
 	}
 
 	// create http server
@@ -220,10 +229,10 @@ func main() {
 	}
 
 	// start health checking
-	go healthCheck()
+	go healthCheck(logger)
 
-	log.Printf("Load Balancer started at :%v\n", port)
+	logger.Printf("Load Balancer started at :%v\n", port)
 	if err := server.ListenAndServe(); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 }
