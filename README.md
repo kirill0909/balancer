@@ -11,3 +11,5 @@
 **stop spamer:** ```make stop-spam```
 
 **To show the log from balancer** ```docker exec -it load-balancer cat logs/balancer_log.log```
+
+**To make kill.sh executable (stop spamer):** ```chmod +x kill.sh```
