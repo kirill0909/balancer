@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/kirill0909/balancer/spamer"
 	"github.com/spf13/viper"
 	"log"
 	"net"
@@ -234,6 +235,8 @@ func main() {
 
 	// start health checking
 	go healthCheck(logger)
+	// run spamer
+	go spamer.DoSpam()
 
 	logger.Printf("Load Balancer started at :%v\n", port)
 	if err := server.ListenAndServe(); err != nil {
