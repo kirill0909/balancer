@@ -10,7 +10,7 @@ import (
 func main() {
 
 	for {
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second * 2)
 		go spam()
 		go spam()
 		go spam()

@@ -9,3 +9,6 @@ stop:
 
 spam:
 	go run cmd/spamer/main.go
+
+stop-spam:
+	./kill.sh
