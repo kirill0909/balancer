@@ -9,16 +9,11 @@ import (
 
 func main() {
 
-	count := 3
 	for {
 		time.Sleep(time.Second * 1)
 		go spam()
 		go spam()
 		go spam()
-		count--
-		if count == 0 {
-			break
-		}
 	}
 
 }

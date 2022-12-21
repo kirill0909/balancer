@@ -22,8 +22,12 @@ const (
 	Retry
 )
 
-// Backend holds the data about a server
-type Backend struct {
+var (
+	logger *log.Logger
+)
+
+// Server holds the data about a server
+type Server struct {
 	URL          *url.URL
 	Alive        bool
 	mux          sync.RWMutex
@@ -31,14 +35,14 @@ type Backend struct {
 }
 
 // SetAlive for this backend
-func (b *Backend) SetAlive(alive bool) {
+func (b *Server) SetAlive(alive bool) {
 	b.mux.Lock()
 	b.Alive = alive
 	b.mux.Unlock()
 }
 
 // IsAlive returns true when backend is alive
-func (b *Backend) IsAlive() (alive bool) {
+func (b *Server) IsAlive() (alive bool) {
 	b.mux.RLock()
 	alive = b.Alive
 	b.mux.RUnlock()
@@ -47,13 +51,13 @@ func (b *Backend) IsAlive() (alive bool) {
 
 // ServerPool holds information about reachable backends
 type ServerPool struct {
-	backends []*Backend
+	backends []*Server
 	current  uint64
 }
 
-// AddBackend to the server pool
-func (s *ServerPool) AddBackend(backend *Backend) {
-	s.backends = append(s.backends, backend)
+// AddServer to the server pool
+func (s *ServerPool) AddServer(server *Server) {
+	s.backends = append(s.backends, server)
 }
 
 // NextIndex atomically increase the counter and return an index
@@ -61,10 +65,10 @@ func (s *ServerPool) NextIndex() int {
 	return int(atomic.AddUint64(&s.current, uint64(1)) % uint64(len(s.backends)))
 }
 
-// MarkBackendStatus changes a status of a backend
-func (s *ServerPool) MarkBackendStatus(backendUrl *url.URL, alive bool) {
+// MarkServerStatus changes a status of a backend
+func (s *ServerPool) MarkServerStatus(serverUrl *url.URL, alive bool) {
 	for _, b := range s.backends {
-		if b.URL.String() == backendUrl.String() {
+		if b.URL.String() == serverUrl.String() {
 			b.SetAlive(alive)
 			break
 		}
@@ -72,7 +76,7 @@ func (s *ServerPool) MarkBackendStatus(backendUrl *url.URL, alive bool) {
 }
 
 // GetNextPeer returns next active peer to take a connection
-func (s *ServerPool) GetNextPeer() *Backend {
+func (s *ServerPool) GetNextPeer() *Server {
 	next := s.NextIndex()
 	l := len(s.backends) + next
 	for i := next; i < l; i++ {
@@ -91,7 +95,7 @@ func (s *ServerPool) GetNextPeer() *Backend {
 func (s *ServerPool) HealthCheck(logger *log.Logger) {
 	for _, b := range s.backends {
 		status := "up"
-		alive := isBackendAlive(b.URL, logger)
+		alive := isServerAlive(b.URL, logger)
 		b.SetAlive(alive)
 		if !alive {
 			status = "down"
@@ -133,8 +137,8 @@ func lb(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Service not available", http.StatusServiceUnavailable)
 }
 
-// isAlive checks whether a backend is Alive by establishing a TCP connection
-func isBackendAlive(u *url.URL, logger *log.Logger) bool {
+// isAlive checks whether a server is Alive by establishing a TCP connection
+func isServerAlive(u *url.URL, logger *log.Logger) bool {
 	timeout := 2 * time.Second
 	conn, err := net.DialTimeout("tcp", u.Host, timeout)
 	if err != nil {
@@ -145,9 +149,9 @@ func isBackendAlive(u *url.URL, logger *log.Logger) bool {
 	return true
 }
 
-// healthCheck runs a routine for check status of the backends every 2 mins
+// healthCheck runs a routine for check status of the servers every 20 seconds
 func healthCheck(logger *log.Logger) {
-	t := time.NewTicker(time.Second * 30)
+	t := time.NewTicker(time.Second * 20)
 	for {
 		select {
 		case <-t.C:
@@ -174,7 +178,7 @@ func main() {
 	}
 	defer file.Close()
 
-	logger := log.New(file, "balancer log ", log.LstdFlags)
+	logger = log.New(file, "balancer log ", log.LstdFlags)
 
 	if err := initConfig(); err != nil {
 		logger.Fatalf("error occured while parsing config file: %s\n", err.Error())
@@ -205,7 +209,7 @@ func main() {
 			}
 
 			// after 3 retries, mark this backend as down
-			serverPool.MarkBackendStatus(serverUrl, false)
+			serverPool.MarkServerStatus(serverUrl, false)
 
 			// if the same request routing for few attempts with different backends, increase the count
 			attempts := GetAttemptsFromContext(request)
@@ -214,7 +218,7 @@ func main() {
 			lb(writer, request.WithContext(ctx))
 		}
 
-		serverPool.AddBackend(&Backend{
+		serverPool.AddServer(&Server{
 			URL:          serverUrl,
 			Alive:        true,
 			ReverseProxy: proxy,
