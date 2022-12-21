@@ -5,7 +5,7 @@ services:
     container_name: load-balancer
     ports:
       - "3030:3030"
-    command: go run main.go 
+    command: go run cmd/main.go 
   web1:
     image: strm/helloworld-http
     container_name: target-web1

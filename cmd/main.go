@@ -4,13 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/spf13/viper"
-	"io"
 	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"os"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -175,15 +173,6 @@ func main() {
 
 	serverList := viper.GetString("webs")
 	port := viper.GetString("port")
-
-	f, err := os.OpenFile("../logs/log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 600)
-	if err != nil {
-		log.Fatalf("error opening log file: %s\n", err.Error())
-	}
-	defer f.Close()
-	wrt := io.MultiWriter(os.Stdout, f)
-	log.SetOutput(wrt)
-	log.Println("do it")
 
 	// parse servers
 	tokens := strings.Split(serverList, ",")
