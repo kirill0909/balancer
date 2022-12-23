@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "stop throw 100 seconds"
-sleep 100
+echo "stop throw 60 seconds"
+sleep 300
 docker stop load-balancer && docker-compose stop 

@@ -1,0 +1,193 @@
+balancer log 2022/12/23 14:06:05 Configured server: http://web1:80
+balancer log 2022/12/23 14:06:05 Configured server: http://web2:80
+balancer log 2022/12/23 14:06:05 Configured server: http://web3:80
+balancer log 2022/12/23 14:06:05 Configured server: http://web4:80
+balancer log 2022/12/23 14:06:05 Configured server: http://web5:80
+balancer log 2022/12/23 14:06:05 Load Balancer started at :3030
+balancer log 2022/12/23 14:06:15 Starting health check...
+balancer log 2022/12/23 14:06:15 http://web1:80 [up]
+balancer log 2022/12/23 14:06:15 http://web2:80 [up]
+balancer log 2022/12/23 14:06:15 http://web3:80 [up]
+balancer log 2022/12/23 14:06:15 http://web4:80 [up]
+balancer log 2022/12/23 14:06:15 http://web5:80 [up]
+balancer log 2022/12/23 14:06:15 Health check completed
+balancer log 2022/12/23 14:06:25 Starting health check...
+balancer log 2022/12/23 14:06:25 http://web1:80 [up]
+balancer log 2022/12/23 14:06:25 http://web2:80 [up]
+balancer log 2022/12/23 14:06:25 http://web3:80 [up]
+balancer log 2022/12/23 14:06:25 http://web4:80 [up]
+balancer log 2022/12/23 14:06:25 http://web5:80 [up]
+balancer log 2022/12/23 14:06:25 Health check completed
+balancer log 2022/12/23 14:06:35 Starting health check...
+balancer log 2022/12/23 14:06:35 http://web1:80 [up]
+balancer log 2022/12/23 14:06:35 http://web2:80 [up]
+balancer log 2022/12/23 14:06:35 http://web3:80 [up]
+balancer log 2022/12/23 14:06:35 http://web4:80 [up]
+balancer log 2022/12/23 14:06:35 http://web5:80 [up]
+balancer log 2022/12/23 14:06:35 Health check completed
+balancer log 2022/12/23 14:06:45 Starting health check...
+balancer log 2022/12/23 14:06:45 http://web1:80 [up]
+balancer log 2022/12/23 14:06:45 http://web2:80 [up]
+balancer log 2022/12/23 14:06:45 http://web3:80 [up]
+balancer log 2022/12/23 14:06:45 http://web4:80 [up]
+balancer log 2022/12/23 14:06:45 http://web5:80 [up]
+balancer log 2022/12/23 14:06:45 Health check completed
+balancer log 2022/12/23 14:06:55 Starting health check...
+balancer log 2022/12/23 14:06:55 http://web1:80 [up]
+balancer log 2022/12/23 14:06:55 http://web2:80 [up]
+balancer log 2022/12/23 14:06:55 http://web3:80 [up]
+balancer log 2022/12/23 14:06:55 http://web4:80 [up]
+balancer log 2022/12/23 14:06:55 http://web5:80 [up]
+balancer log 2022/12/23 14:06:55 Health check completed
+balancer log 2022/12/23 14:07:03 [web2:80] dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:05 Starting health check...
+balancer log 2022/12/23 14:07:05 http://web1:80 [up]
+balancer log 2022/12/23 14:07:05 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:05 http://web2:80 [down]
+balancer log 2022/12/23 14:07:05 http://web3:80 [up]
+balancer log 2022/12/23 14:07:05 http://web4:80 [up]
+balancer log 2022/12/23 14:07:05 http://web5:80 [up]
+balancer log 2022/12/23 14:07:05 Health check completed
+balancer log 2022/12/23 14:07:15 Starting health check...
+balancer log 2022/12/23 14:07:15 http://web1:80 [up]
+balancer log 2022/12/23 14:07:15 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:15 http://web2:80 [down]
+balancer log 2022/12/23 14:07:15 http://web3:80 [up]
+balancer log 2022/12/23 14:07:15 http://web4:80 [up]
+balancer log 2022/12/23 14:07:15 http://web5:80 [up]
+balancer log 2022/12/23 14:07:15 Health check completed
+balancer log 2022/12/23 14:07:25 Starting health check...
+balancer log 2022/12/23 14:07:25 http://web1:80 [up]
+balancer log 2022/12/23 14:07:25 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:25 http://web2:80 [down]
+balancer log 2022/12/23 14:07:25 http://web3:80 [up]
+balancer log 2022/12/23 14:07:25 http://web4:80 [up]
+balancer log 2022/12/23 14:07:25 http://web5:80 [up]
+balancer log 2022/12/23 14:07:25 Health check completed
+balancer log 2022/12/23 14:07:29 [web2:80] dial tcp 172.22.0.4:80: i/o timeout
+balancer log 2022/12/23 14:07:35 Starting health check...
+balancer log 2022/12/23 14:07:35 http://web1:80 [up]
+balancer log 2022/12/23 14:07:35 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:35 http://web2:80 [down]
+balancer log 2022/12/23 14:07:35 http://web3:80 [up]
+balancer log 2022/12/23 14:07:35 http://web4:80 [up]
+balancer log 2022/12/23 14:07:35 http://web5:80 [up]
+balancer log 2022/12/23 14:07:35 Health check completed
+balancer log 2022/12/23 14:07:45 Starting health check...
+balancer log 2022/12/23 14:07:45 http://web1:80 [up]
+balancer log 2022/12/23 14:07:45 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:45 http://web2:80 [down]
+balancer log 2022/12/23 14:07:45 http://web3:80 [up]
+balancer log 2022/12/23 14:07:45 http://web4:80 [up]
+balancer log 2022/12/23 14:07:45 http://web5:80 [up]
+balancer log 2022/12/23 14:07:45 Health check completed
+balancer log 2022/12/23 14:07:55 Starting health check...
+balancer log 2022/12/23 14:07:55 http://web1:80 [up]
+balancer log 2022/12/23 14:07:55 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:07:55 http://web2:80 [down]
+balancer log 2022/12/23 14:07:55 http://web3:80 [up]
+balancer log 2022/12/23 14:07:55 http://web4:80 [up]
+balancer log 2022/12/23 14:07:55 http://web5:80 [up]
+balancer log 2022/12/23 14:07:55 Health check completed
+balancer log 2022/12/23 14:08:05 Starting health check...
+balancer log 2022/12/23 14:08:05 http://web1:80 [up]
+balancer log 2022/12/23 14:08:05 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:08:05 http://web2:80 [down]
+balancer log 2022/12/23 14:08:05 http://web3:80 [up]
+balancer log 2022/12/23 14:08:05 http://web4:80 [up]
+balancer log 2022/12/23 14:08:05 http://web5:80 [up]
+balancer log 2022/12/23 14:08:05 Health check completed
+balancer log 2022/12/23 14:08:15 Starting health check...
+balancer log 2022/12/23 14:08:15 http://web1:80 [up]
+balancer log 2022/12/23 14:08:15 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:08:15 http://web2:80 [down]
+balancer log 2022/12/23 14:08:15 http://web3:80 [up]
+balancer log 2022/12/23 14:08:15 http://web4:80 [up]
+balancer log 2022/12/23 14:08:15 http://web5:80 [up]
+balancer log 2022/12/23 14:08:15 Health check completed
+balancer log 2022/12/23 14:08:25 Starting health check...
+balancer log 2022/12/23 14:08:25 http://web1:80 [up]
+balancer log 2022/12/23 14:08:25 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:08:25 http://web2:80 [down]
+balancer log 2022/12/23 14:08:25 http://web3:80 [up]
+balancer log 2022/12/23 14:08:25 http://web4:80 [up]
+balancer log 2022/12/23 14:08:25 http://web5:80 [up]
+balancer log 2022/12/23 14:08:25 Health check completed
+balancer log 2022/12/23 14:08:35 Starting health check...
+balancer log 2022/12/23 14:08:35 http://web1:80 [up]
+balancer log 2022/12/23 14:08:35 Site unreachable, error:  dial tcp: lookup web2 on 127.0.0.11:53: server misbehaving
+balancer log 2022/12/23 14:08:35 http://web2:80 [down]
+balancer log 2022/12/23 14:08:35 http://web3:80 [up]
+balancer log 2022/12/23 14:08:35 http://web4:80 [up]
+balancer log 2022/12/23 14:08:35 http://web5:80 [up]
+balancer log 2022/12/23 14:08:35 Health check completed
+balancer log 2022/12/23 14:08:45 Starting health check...
+balancer log 2022/12/23 14:08:45 http://web1:80 [up]
+balancer log 2022/12/23 14:08:45 http://web2:80 [up]
+balancer log 2022/12/23 14:08:45 http://web3:80 [up]
+balancer log 2022/12/23 14:08:45 http://web4:80 [up]
+balancer log 2022/12/23 14:08:45 http://web5:80 [up]
+balancer log 2022/12/23 14:08:45 Health check completed
+balancer log 2022/12/23 14:08:55 Starting health check...
+balancer log 2022/12/23 14:08:55 http://web1:80 [up]
+balancer log 2022/12/23 14:08:55 http://web2:80 [up]
+balancer log 2022/12/23 14:08:55 http://web3:80 [up]
+balancer log 2022/12/23 14:08:55 http://web4:80 [up]
+balancer log 2022/12/23 14:08:55 http://web5:80 [up]
+balancer log 2022/12/23 14:08:55 Health check completed
+balancer log 2022/12/23 14:09:05 Starting health check...
+balancer log 2022/12/23 14:09:05 http://web1:80 [up]
+balancer log 2022/12/23 14:09:05 http://web2:80 [up]
+balancer log 2022/12/23 14:09:05 http://web3:80 [up]
+balancer log 2022/12/23 14:09:05 http://web4:80 [up]
+balancer log 2022/12/23 14:09:05 http://web5:80 [up]
+balancer log 2022/12/23 14:09:05 Health check completed
+balancer log 2022/12/23 14:09:15 Starting health check...
+balancer log 2022/12/23 14:09:15 http://web1:80 [up]
+balancer log 2022/12/23 14:09:15 http://web2:80 [up]
+balancer log 2022/12/23 14:09:15 http://web3:80 [up]
+balancer log 2022/12/23 14:09:15 http://web4:80 [up]
+balancer log 2022/12/23 14:09:15 http://web5:80 [up]
+balancer log 2022/12/23 14:09:15 Health check completed
+balancer log 2022/12/23 14:09:25 Starting health check...
+balancer log 2022/12/23 14:09:25 http://web1:80 [up]
+balancer log 2022/12/23 14:09:25 http://web2:80 [up]
+balancer log 2022/12/23 14:09:25 http://web3:80 [up]
+balancer log 2022/12/23 14:09:25 http://web4:80 [up]
+balancer log 2022/12/23 14:09:25 http://web5:80 [up]
+balancer log 2022/12/23 14:09:25 Health check completed
+balancer log 2022/12/23 14:09:35 Starting health check...
+balancer log 2022/12/23 14:09:35 http://web1:80 [up]
+balancer log 2022/12/23 14:09:35 http://web2:80 [up]
+balancer log 2022/12/23 14:09:35 http://web3:80 [up]
+balancer log 2022/12/23 14:09:35 http://web4:80 [up]
+balancer log 2022/12/23 14:09:35 http://web5:80 [up]
+balancer log 2022/12/23 14:09:35 Health check completed
+balancer log 2022/12/23 14:09:45 Starting health check...
+balancer log 2022/12/23 14:09:45 http://web1:80 [up]
+balancer log 2022/12/23 14:09:45 http://web2:80 [up]
+balancer log 2022/12/23 14:09:45 http://web3:80 [up]
+balancer log 2022/12/23 14:09:45 http://web4:80 [up]
+balancer log 2022/12/23 14:09:45 http://web5:80 [up]
+balancer log 2022/12/23 14:09:45 Health check completed
+balancer log 2022/12/23 14:09:55 Starting health check...
+balancer log 2022/12/23 14:09:55 http://web1:80 [up]
+balancer log 2022/12/23 14:09:55 http://web2:80 [up]
+balancer log 2022/12/23 14:09:55 http://web3:80 [up]
+balancer log 2022/12/23 14:09:55 http://web4:80 [up]
+balancer log 2022/12/23 14:09:55 http://web5:80 [up]
+balancer log 2022/12/23 14:09:55 Health check completed
+balancer log 2022/12/23 14:10:05 Starting health check...
+balancer log 2022/12/23 14:10:05 http://web1:80 [up]
+balancer log 2022/12/23 14:10:05 http://web2:80 [up]
+balancer log 2022/12/23 14:10:05 http://web3:80 [up]
+balancer log 2022/12/23 14:10:05 http://web4:80 [up]
+balancer log 2022/12/23 14:10:05 http://web5:80 [up]
+balancer log 2022/12/23 14:10:05 Health check completed
+balancer log 2022/12/23 14:10:15 Starting health check...
+balancer log 2022/12/23 14:10:15 http://web1:80 [up]
+balancer log 2022/12/23 14:10:15 http://web2:80 [up]
+balancer log 2022/12/23 14:10:15 http://web3:80 [up]
+balancer log 2022/12/23 14:10:15 http://web4:80 [up]
+balancer log 2022/12/23 14:10:15 http://web5:80 [up]
+balancer log 2022/12/23 14:10:15 Health check completed

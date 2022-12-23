@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	LOG_FILE_PATH string = "logs/balancer_log.log"
+	LOG_FILE_PATH string = "logs/balancer.log"
 	Attempts      int    = iota
 	Retry
 )
@@ -154,7 +154,7 @@ func isServerAlive(u *url.URL, logger *log.Logger) bool {
 
 // healthCheck runs a routine for check status of the servers every 20 seconds
 func healthCheck(logger *log.Logger) {
-	t := time.NewTicker(time.Second * 20)
+	t := time.NewTicker(time.Second * 10)
 	for {
 		select {
 		case <-t.C:
