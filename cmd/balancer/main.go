@@ -11,9 +11,11 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"os/signal"
 	"strings"
 	"sync"
 	"sync/atomic"
+	"syscall"
 	"time"
 )
 
@@ -239,7 +241,14 @@ func main() {
 	go spamer.DoSpam()
 
 	logger.Printf("Load Balancer started at :%v\n", port)
-	if err := server.ListenAndServe(); err != nil {
-		logger.Fatal(err)
-	}
+	go func() {
+		if err := server.ListenAndServe(); err != nil {
+			logger.Fatal(err)
+		}
+	}()
+
+	quit := make(chan os.Signal)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGKILL, os.Interrupt)
+	<-quit
+
 }

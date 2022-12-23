@@ -2,7 +2,4 @@
 .SILENT:
 
 build:
-	docker-compose up --build
-
-stop:
-	docker-compose stop
+	docker-compose up & ./kill.sh
