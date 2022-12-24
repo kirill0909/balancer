@@ -175,7 +175,7 @@ var serverPool ServerPool
 
 func main() {
 
-	file, err := os.OpenFile(LOG_FILE_PATH, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(LOG_FILE_PATH, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Fatalf("error reading log file: %s\n", err.Error())
 	}

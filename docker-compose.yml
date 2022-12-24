@@ -7,7 +7,7 @@ services:
       - "3030:3030"
     command: ./run.sh 
     volumes:
-      - ./logs/balancer.log:/app/logs/balancer.log
+      - ./logs:/app/logs
   web1:
     image: strm/helloworld-http
     container_name: target-web1
