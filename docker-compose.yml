@@ -8,18 +8,30 @@ services:
     command: ./run.sh 
     volumes:
       - ./logs:/app/logs
+    environment:
+      - "TZ=Europe/Moscow"
   web1:
     image: strm/helloworld-http
     container_name: target-web1
+    environment:
+      - "TZ=Europe/Moscow"
   web2:
     image: strm/helloworld-http
     container_name: target-web2
+    environment:
+      - "TZ=Europe/Moscow"
   web3:
     image: strm/helloworld-http
     container_name: target-web3
+    environment:
+      - "TZ=Europe/Moscow"
   web4:
     image: strm/helloworld-http
     container_name: target-web4
+    environment:
+      - "TZ=Europe/Moscow"
   web5:
     image: strm/helloworld-http
     container_name: target-web5
+    environment:
+      - "TZ=Europe/Moscow"
